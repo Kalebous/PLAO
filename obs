@@ -1,0 +1,153 @@
+#Criar uma pasta com o nome do projeto
+# Obs: Não utilizar caracteres especiais nem deixar espaços entre as palavras ao escolher o nome do projeto
+
+# Entrar na pasta do projeto com prompt de comando
+Exemplo:
+
+D:\Rogerio\Fieb\2021\engenho\plao_2\projects\plao-node>
+
+# Iniciar o package.json da seguinte maneira: 
+   npm init -y    - automático
+ ou
+   npm init 
+        - Preenchimento passo a passo
+
+        obs: Aconselha-se neste primeiro momento iniciar o package.json automaticamente
+
+  Instalação das dependências
+
+  npm i NOME_MÓDULO (Dependência)  ou npm install NOME_MÓDULO
+
+  Instalação Global
+
+  npm install -g nodemon
+
+Express
+É um framework Node mais popular e a biblioteca subjacente para uma série de outros 
+frameworks do Node.
+O Express oferece soluções para:
+- Gerenciar requisições de diferentes verbos HTTP(get, post, delete, put)
+- Integrar "views engines" para inserir dados nos templates
+- Definir as configurações comuns da aplicação web, como a porta a ser usada para 
+conexão e a localização dos modelos que são usados para renderizar a resposta
+instalação local (somente no seu projeto)
+npm install express
+
+EJS
+É uma engine de visualização, com ele conseguimos de uma maneira fácil e simples transportar
+dados do back-end para o front-end, basicamente conseguimos utilizar códigos em javascript
+no html de nossas páginas
+intalação local (somente no seu projeto)
+npm install ejs
+
+Nodemon
+É um utilitário que irá monitorar todas as alterações nos arquivos de sua aplicação
+e reiniciar automaticamente o servidor quando for necessário
+ instalação global
+npm install --g nodemon
+
+
+A importância dos módulos
+Permitem organizar melhor nosso códigos isolando algumas partes que possam ser
+reutilizadas em nossas aplicações, ou até mesmo em outros inclusive disponibilizando
+para a Internet, Express e o Ejs são alguns exemplos de módulos utilizando o require
+
+Reestruturação do projeto para melhor organização
+
+Criar a pasta app na raíz do projeto e mover a pasta view para dentro da mesma
+Criar a pasta routes dentro da pasta app  - obs: routes corresponde às rotas do projeto
+Para cada view criaremos uma rota ex: home.js, noticias.js e form_add_noticia.js
+
+Mover os respectivos códigos de rota do arquivo app.js para o correspondente de routes
+
+Em server.js acrescentar o novo caminho da view
+app.set('views','./app/views');
+
+Chamar as rotas em app.js 
+exemplo: 
+const rotaHome = require('./app/routes/home')(app);
+
+MVC (MODEL VIEW CONTROLLER) - PADRÃO DE ARQUITETURA
+
+https://tableless.com.br/mvc-afinal-e-o-que/#:~:text=MVC%20%C3%A9%20nada%20mais%20que,camada%20de%20controle(controller).
+
+https://www.devmedia.com.br/introducao-ao-padrao-mvc/29308
+
+Com o xampp instalado iniciar o serviço
+Acessar a pasta bin do mysql
+C:\xampp\mysql\bin
+
+Uma vez dentro da pasta bin
+executar os comandos para acessar o gerenciador mysql (mariadb)
+mysql -h localhost -u root    <<ENTER>>
+
+#listando todos os bancos de dados
+show databases;
+#criando um banco de dados
+create database noticiasdb
+# Entrar no banco de dados
+use noticiasdb
+# Listando as tabelas existentes
+show tables;
+# criar tabelas
+create table noticias(id_noticia int not null primary key auto_increment,
+                       titulo varchar(100), noticia text,
+                       data_criacao timestamp default current_timestamp);
+show tables;
+#inserir dados
+insert into noticias (titulo, noticia) values('titulo da noticia',
+                                               'conteudo da noticia');
+#listar os dados
+select * from noticias
+
+
+#INSTALAR O MÓDULO mysql
+Qualquer prompt de comando
+
+Uma vez dentro da pasta do projeto...
+
+npm install mysql
+
+# Instalação do consign
+
+Uma vez intalado e configurado o consig posso eliminar os chamentos de rotas
+em app.js
+
+// Chamando as rotas
+/*const rotaHome = require('./app/routes/home');
+rotaHome(app);*/
+//const rotaHome = require('./app/routes/home')(app);
+
+
+/*const rotaNoticias = require('./app/routes/noticias');
+rotaNoticias(app);*/
+//const rotaNoticias = require('./app/routes/noticias')(app);
+
+/*const rotaFormAddNoticia = require('./app/routes/form_add_noticia');
+rotaFormAddNoticia(app);*/
+//const rotaFormAddNoticia = require('./app/routes/form_add_noticia')(app);
+
+------------------------------------------------------------------------------------
+
+Body Parser
+
+
+
+Para ler os dados http post, temos que usar o módulo de nó "body-parser". body-parser é um pedaço de middleware expresso que lê a entrada de um formulário e armazena-o como um objeto javascript acessível através de req.body
+
+
+A opção "extended" diz para o express qual biblioteca ele deve utilizar para fazer o parsing do conteúdo das requisições que ele recebe.
+Quando extended : true vai utilizar a biblioteca qs e quando for false ele vai utilizar a biblioteca querystring.
+
+A diferença entre elas é que a biblioteca qs permite o aninhamento de objetos (nested objects), que é praticamente como o JSON trabalha:
+
+// {"animal":{"tipo":"cachorro","raca":"vira-lata","idade":3}}
+E a biblioteca querystring não suporta nested objects.
+
+# Intalação do body-parser
+
+npm i body-parser
+
+#instalação do express-validator
+
+npm install express-validator@3.2.0 -E
